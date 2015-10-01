@@ -1,0 +1,48 @@
+<div class="row">
+    <br />
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="well well-lg">
+
+            <form class="input-form" name="inputForm">
+                <div class="form-group">
+                    <label for="repoName" class="sr-only">Repository Name</label>
+                    <input type="repoName" class="form-control" id="repoName" placeholder="Repository Name" ng-model="searchTerm" ng-change="searchRepos()">
+                </div>
+                <span ng-if="searchTerm">
+                    <p>Currently showing results for "<span class="text-danger">{{searchTerm}}</span>".</p>
+                <p ng-if="repositories.total_count">Total repos: {{ repositories.total_count }}</p>
+                <p ng-if="repositories.items">Showing: {{ repositories.items.length }}</p>
+                </span>
+            </form>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+<span ng-if="searchTerm">
+<hr />
+<div class="row">
+    <table class="table table-striped">
+        <tr>
+            <th ng-click="doSort('name')" width="20%">Name <i class="fa fa-sort"></i></th>
+            <th ng-click="doSort('description')">Description <i class="fa fa-sort"></i></th>
+            <th ng-click="doSort('forks_count')" width="7%">Forks <i class="fa fa-sort"></i></th>
+            <th ng-click="doSort('stargazers_count')" width="7%">Stars <i class="fa fa-sort"></i></th>
+            <th ng-click="doSort('open_issues ')" width="7%">Open issues <i class="fa fa-sort"></i></th>
+            <th ng-click="">&nbsp;</th>
+        </tr>
+        <tr ng-repeat="repo in repositories.items | filter:customerFilter | orderBy:sortBy:reverse" class="repeat-animation">
+            <td>{{ repo.name }}</td>
+            <td>{{ repo.description }}</td>
+            <td class="text-center">{{ repo.forks_count }}</td>
+            <td class="text-center">{{ repo.stargazers_count }}</td>
+            <td class="text-center">{{ repo.open_issues  }}<br /> <a href="#/issues/{{repo.owner.login}}/{{repo.name}}" class="btn btn-link">View open issues <i class="fa fa-chevron-right"></i></a></td>
+            <td><a href="{{ repo.html_url }}" class="btn btn-primary">Visit <i class="fa fa-chevron-right"></i></a></td>
+        </tr>
+    </table>
+
+</div>
+</span>
